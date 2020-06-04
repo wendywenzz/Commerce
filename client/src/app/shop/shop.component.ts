@@ -22,7 +22,7 @@ export class ShopComponent implements OnInit {
     { name: 'Price: High to Low', value: 'priceDesc' },
   ];
 
-  @ViewChild('search', { static: true }) searchInput: ElementRef;
+  @ViewChild('search', { static: false }) searchInput: ElementRef;
 
   constructor(private shopService: ShopService) {}
 

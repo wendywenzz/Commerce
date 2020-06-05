@@ -2,8 +2,6 @@ import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { RouterModule } from '@angular/router';
 import { HomeModule } from './home/home.module';
-import { HomeComponent } from './home/home.component';
-import { ShopModule } from './shop/shop.module';
 import { CoreModule } from './core/core.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';

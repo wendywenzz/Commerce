@@ -1,3 +1,4 @@
+import { OrdersModule } from './orders/orders.module';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
@@ -24,6 +25,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     HomeModule,
     RouterModule,
     NgxSpinnerModule,
+    OrdersModule,
   ],
   providers: [
     {

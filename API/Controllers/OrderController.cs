@@ -13,7 +13,6 @@ using System.Collections.Generic;
 
 namespace API.Controllers
 {
-    [Authorize]
     public class OrderController : BaseApiController
     {
         private readonly IOrderService _orderService;

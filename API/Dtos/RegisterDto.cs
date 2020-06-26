@@ -5,6 +5,8 @@ namespace API.Dtos
     public class RegisterDto
     {
         [Required]
+        public string PhoneNo { get; set; }
+        [Required]
         public string DisplayName { get; set; }
         [Required]
         [EmailAddress]

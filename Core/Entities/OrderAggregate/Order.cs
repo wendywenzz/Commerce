@@ -18,6 +18,7 @@ namespace Core.Entities.OrderAggregate
             SubTotal = subTotal;
         }
 
+        public int OrderId { get; set; }
         public string BuyerEmail { get; set; }
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
         public Address ShipToAddress { get; set; }

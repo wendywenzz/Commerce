@@ -27,9 +27,9 @@ namespace Infrastructure.Services
             var items = new List<OrderItem>();
             foreach (var item in basket.Items)
             {
-                var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
-                var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productItem.PictureUrl);
-                var orderItem = new OrderItem(itemOrdered, productItem.Price, item.Quantity);
+                var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.BasketItemId);
+                var itemOrdered = new ProductItemOrdered();
+                var orderItem = new OrderItem();
                 items.Add(orderItem);
             }
 

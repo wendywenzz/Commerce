@@ -1,14 +1,51 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Core.Entities
 {
+    [Table("Product")]
     public class Product : BaseEntity
     {
+        [Column("ProductId")]
+        public int ProductId { get; set; }
+        [Column("Name")]
+        [Required]
         public string Name { get; set; }
+        [Column("Description")]
+        [Required]
         public string Description { get; set; }
-        public decimal Price { get; set; }  
+        [Column("PictureUrl")]
+        [Required]
         public string PictureUrl { get; set; }
-        public ProductType ProductType { get; set; }
-        public int ProductTypeId { get; set; }
-        public ProductBrand ProductBrand { get; set; }
-        public int ProductBrandId { get; set; }
+        [Column("ProductCategoryId")]
+        [Required]
+        public int ProductCategoryId { get; set; }
+        [Column("UnitOfMeasurementId")]
+        [Required]
+        public int UnitOfMeasurementId { get; set; }
+        [Column("Weight")]
+        [Required]
+        public decimal Weight { get; set; }
+        [Column("IsUseVariant")]
+        [Required]
+        public bool IsUseVariant { get; set; }
+
+        [ForeignKey("ProductCategoryId")]
+        [InverseProperty("Product")]
+        public ProductCategory ProductCategory { get; set; }
+
+        [ForeignKey("UnitOfMeasurementId")]
+        [InverseProperty("Product")]
+        public UnitOfMeasurement UnitOfMeasurement { get; set; }
+
+
+
+        [InverseProperty("Product")]
+        public virtual ICollection<ProductVariant> ProductVariant { get; set; }
+
+        [InverseProperty("Product")]
+        public virtual ICollection<ProductDetail> ProductDetail { get; set; }
+
     }
 }

@@ -14,145 +14,150 @@ namespace Infrastructure.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3");
+                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Core.Entities.Product", b =>
+            modelBuilder.Entity("Core.Entities.OrderAggregate.Address", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AddressId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(180);
+                    b.Property<string>("City")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
 
-                    b.Property<string>("PictureUrl")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<string>("FirstName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("LastName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("ProductBrandId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("State")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("ProductTypeId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Street")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Zipcode")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasIndex("ProductBrandId");
+                    b.HasKey("AddressId");
 
-                    b.HasIndex("ProductTypeId");
-
-                    b.ToTable("Products");
+                    b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("Core.Entities.ProductBrand", b =>
+            modelBuilder.Entity("Core.Entities.OrderAggregate.DeliveryMethod", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("DeliveryMethodId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductBrands");
-                });
-
-            modelBuilder.Entity("Core.Entities.ProductType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProductTypes");
-                });
-
-            modelBuilder.Entity("Core.OrderAggregate.DeliveryMethod", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("DeliveryTime")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("ShortName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("Id");
+                    b.HasKey("DeliveryMethodId");
 
                     b.ToTable("DeliveryMethods");
                 });
 
-            modelBuilder.Entity("Core.OrderAggregate.Order", b =>
+            modelBuilder.Entity("Core.Entities.OrderAggregate.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("BuyerEmail")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int?>("DeliveryMethodId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTimeOffset>("OrderDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("PaymentIntentId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("ShipToAddressAddressId")
+                        .HasColumnType("int");
 
-                    b.Property<double>("SubTotal")
-                        .HasColumnType("REAL");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("OrderId");
 
                     b.HasIndex("DeliveryMethodId");
+
+                    b.HasIndex("ShipToAddressAddressId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Core.OrderAggregate.OrderItem", b =>
+            modelBuilder.Entity("Core.Entities.OrderAggregate.OrderItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int?>("OrderId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("PictureUrl")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<int>("ProductItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("SKU")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("UnitOfMeasurementName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("OrderItemId");
 
                     b.HasIndex("OrderId");
 
@@ -161,85 +166,312 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.Product", b =>
                 {
-                    b.HasOne("Core.Entities.ProductBrand", "ProductBrand")
-                        .WithMany()
-                        .HasForeignKey("ProductBrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ProductId")
+                        .HasColumnType("int");
 
-                    b.HasOne("Core.Entities.ProductType", "ProductType")
-                        .WithMany()
-                        .HasForeignKey("ProductTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnName("Description")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsUseVariant")
+                        .HasColumnName("IsUseVariant")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasColumnName("PictureUrl")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnName("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UnitOfMeasurementId")
+                        .HasColumnName("UnitOfMeasurementId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnName("Weight")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.HasIndex("UnitOfMeasurementId");
+
+                    b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("Core.OrderAggregate.Order", b =>
+            modelBuilder.Entity("Core.Entities.ProductCategory", b =>
                 {
-                    b.HasOne("Core.OrderAggregate.DeliveryMethod", "DeliveryMethod")
+                    b.Property<int>("ProductCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int?>("ParentCategoryId")
+                        .HasColumnName("ParentCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductCategoryId");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("ProductCategory");
+                });
+
+            modelBuilder.Entity("Core.Entities.ProductDetail", b =>
+                {
+                    b.Property<int>("ProductDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ProductDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnName("Price")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnName("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductVariantId")
+                        .HasColumnName("ProductVariantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SKU")
+                        .IsRequired()
+                        .HasColumnName("SKU")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("ProductDetailId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.ToTable("ProductDetail");
+                });
+
+            modelBuilder.Entity("Core.Entities.ProductVariant", b =>
+                {
+                    b.Property<int>("ProductVariantId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ProductVariantId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("FirstVariantTypeMemberId")
+                        .HasColumnName("FirstVariantTypeMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnName("ShortName")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SecondVariantTypeMemberId")
+                        .HasColumnName("SecondVariantTypeMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductVariantId");
+
+                    b.HasIndex("FirstVariantTypeMemberId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SecondVariantTypeMemberId");
+
+                    b.ToTable("ProductVariant");
+                });
+
+            modelBuilder.Entity("Core.Entities.UnitOfMeasurement", b =>
+                {
+                    b.Property<int>("UnitOfMeasurementId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("UnitOfMeasurementId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasColumnName("ShortName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("UnitOfMeasurementId");
+
+                    b.ToTable("UnitOfMeasurement");
+                });
+
+            modelBuilder.Entity("Core.Entities.VariantType", b =>
+                {
+                    b.Property<int>("VariantTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("VariantTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("VariantTypeId");
+
+                    b.HasIndex("VariantTypeId");
+
+                    b.ToTable("VariantType");
+                });
+
+            modelBuilder.Entity("Core.Entities.VariantTypeMember", b =>
+                {
+                    b.Property<int>("VariantTypeMemberId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("VariantTypeMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("DtmCrt")
+                        .HasColumnName("DtmCrt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("Name")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<int>("VariantTypeId")
+                        .HasColumnName("VariantTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("VariantTypeMemberId");
+
+                    b.HasIndex("VariantTypeId");
+
+                    b.ToTable("VariantTypeMember");
+                });
+
+            modelBuilder.Entity("Core.Entities.OrderAggregate.Order", b =>
+                {
+                    b.HasOne("Core.Entities.OrderAggregate.DeliveryMethod", "DeliveryMethod")
                         .WithMany()
                         .HasForeignKey("DeliveryMethodId");
 
-                    b.OwnsOne("Core.OrderAggregate.Address", "ShipToAddress", b1 =>
-                        {
-                            b1.Property<int>("OrderId")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("City")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("FirstName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("LastName")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("State")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("Street")
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("Zipcode")
-                                .HasColumnType("TEXT");
-
-                            b1.HasKey("OrderId");
-
-                            b1.ToTable("Orders");
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrderId");
-                        });
+                    b.HasOne("Core.Entities.OrderAggregate.Address", "ShipToAddress")
+                        .WithMany()
+                        .HasForeignKey("ShipToAddressAddressId");
                 });
 
-            modelBuilder.Entity("Core.OrderAggregate.OrderItem", b =>
+            modelBuilder.Entity("Core.Entities.OrderAggregate.OrderItem", b =>
                 {
-                    b.HasOne("Core.OrderAggregate.Order", null)
+                    b.HasOne("Core.Entities.OrderAggregate.Order", null)
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OrderId");
+                });
 
-                    b.OwnsOne("Core.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
-                        {
-                            b1.Property<int>("OrderItemId")
-                                .HasColumnType("INTEGER");
+            modelBuilder.Entity("Core.Entities.Product", b =>
+                {
+                    b.HasOne("Core.Entities.ProductCategory", "ProductCategory")
+                        .WithMany("Product")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                            b1.Property<string>("PictureUrl")
-                                .HasColumnType("TEXT");
+                    b.HasOne("Core.Entities.UnitOfMeasurement", "UnitOfMeasurement")
+                        .WithMany("Product")
+                        .HasForeignKey("UnitOfMeasurementId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
 
-                            b1.Property<int>("ProductItemId")
-                                .HasColumnType("INTEGER");
+            modelBuilder.Entity("Core.Entities.ProductCategory", b =>
+                {
+                    b.HasOne("Core.Entities.ProductCategory", "ParentCategory")
+                        .WithMany("ChildCategory")
+                        .HasForeignKey("ParentCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
 
-                            b1.Property<string>("ProductName")
-                                .HasColumnType("TEXT");
+            modelBuilder.Entity("Core.Entities.ProductDetail", b =>
+                {
+                    b.HasOne("Core.Entities.Product", "Product")
+                        .WithMany("ProductDetail")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                            b1.HasKey("OrderItemId");
+                    b.HasOne("Core.Entities.ProductVariant", "ProductVariant")
+                        .WithMany("ProductDetail")
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
 
-                            b1.ToTable("OrderItems");
+            modelBuilder.Entity("Core.Entities.ProductVariant", b =>
+                {
+                    b.HasOne("Core.Entities.VariantTypeMember", "FirstVariantTypeMember")
+                        .WithMany("FirstVariantTypeMember")
+                        .HasForeignKey("FirstVariantTypeMemberId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                            b1.WithOwner()
-                                .HasForeignKey("OrderItemId");
-                        });
+                    b.HasOne("Core.Entities.Product", "Product")
+                        .WithMany("ProductVariant")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.VariantTypeMember", "SecondVariantTypeMember")
+                        .WithMany("SecondVariantTypeMember")
+                        .HasForeignKey("SecondVariantTypeMemberId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Core.Entities.VariantTypeMember", b =>
+                {
+                    b.HasOne("Core.Entities.VariantType", "VariantType")
+                        .WithMany("VariantTypeMember")
+                        .HasForeignKey("VariantTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

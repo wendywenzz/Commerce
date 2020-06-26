@@ -10,10 +10,10 @@ namespace Core.Entities
 
         public CustomerBasket(string id)
         {
-            Id = id;
+            CustomerBasketId = id;
         }
 
-        public string Id { get; set; }
+        public string CustomerBasketId { get; set; }
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
     }
 }
